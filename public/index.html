@@ -1,1 +1,42 @@
-
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel Starter</title>
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; }
+    body { margin: 0; min-height: 100vh; background: #0b1020; color: #eaf0ff; }
+    main { max-width: 760px; margin: 8vh auto; padding: 24px; }
+    .card { background: #151d33; border: 1px solid #293654; border-radius: 18px; padding: 24px; }
+    h1 { margin-top: 0; } p { color: #b8c5e3; line-height: 1.6; }
+    .badge { display: inline-block; background: #173e35; color: #9af0cb; padding: 6px 10px; border-radius: 999px; font-size: 14px; }
+    button { border: 0; border-radius: 10px; padding: 11px 16px; background: #86a8ff; color: #071126; font-weight: 700; }
+    #status { margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card">
+      <span class="badge">PANEL ONLINE TEMPLATE</span>
+      <h1>Panel Starter</h1>
+      <p>Template dashboard sederhana untuk diuji di hosting Render. Ini belum mengelola VPS, akun, atau layanan lain.</p>
+      <button id="check">Periksa status server</button>
+      <p id="status" role="status">Status: belum diperiksa.</p>
+    </section>
+  </main>
+  <script>
+    document.getElementById('check').addEventListener('click', async () => {
+      const el = document.getElementById('status');
+      el.textContent = 'Memeriksa...';
+      try {
+        const response = await fetch('/health');
+        const data = await response.json();
+        el.textContent = data.ok ? 'Status: server aktif.' : 'Status: perlu diperiksa.';
+      } catch {
+        el.textContent = 'Status: belum dapat terhubung.';
+      }
+    });
+  </script>
+</body>
+</html>
